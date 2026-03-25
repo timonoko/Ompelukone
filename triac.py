@@ -1,5 +1,4 @@
 
-print('Testing 5')
 
 try:
   import usocket as socket
@@ -61,48 +60,3 @@ while True:
     tim.deinit() # This kills the background timer completely
   else:
     set_speed((pot_value-500)/25)
-
-"""
-while True:
-    s.settimeout(0.2)
-    try:
-        conn, addr = s.accept()
-        request = conn.recv(1024)
-        request = str(request)
-        s.settimeout(5.0)
-        if request.find('/ON') == 6:
-            tim.deinit() # This kills the background timer completely
-            relayState=1
-            triac.value(1)
-        if request.find('/OFF') == 6:
-            relayState=0
-            triac.value(0)
-            tim.deinit() # This kills the background timer completely
-            print("Motor Hard Stopped and Timer Deactivated")
-        if request.find('/10S') == 6:
-            triac.value(1)
-            time.sleep(10)
-            triac.value(0)
-            relayState=0
-        if request.find('/S') == 6:
-            relayState=1
-            vauhti=eval(request[8]+request[9])
-            tim.deinit()
-            print('vauhti=',vauhti)
-            set_speed(vauhti)
-        if request.find('/LED/ON') == 6:
-            SininenLedi.value(0)
-        if request.find('/LED/OFF') == 6:
-            SininenLedi.value(1)
-        response = web_page()
-        conn.send('HTTP/1.1 200 OK\n')
-        conn.send('Content-Type: text/html\n')
-        conn.send('Connection: close\n\n')
-        conn.sendall(response)
-        conn.close()
-    except OSError:
-        buttoni() 
-"""
-
-
-
