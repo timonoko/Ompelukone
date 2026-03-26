@@ -62,10 +62,9 @@ module reikia() {
   }
 }
 
-//translate([0,length+3,0])lid();
-//difference(){  box();reikia(); }
+translate([0,length+3,0])lid();
+difference(){  box();reikia(); }
 
 
-//translate([47,14,-15])topseli();
-//topseli();
-lid();
+translate([47,14,-15])topseli();
+
