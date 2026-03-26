@@ -42,8 +42,10 @@ def set_speed(value):
     goal_speed = round(value/5.-10)
     if goal_speed==0: goal_speed=1
     print(f"Motor speed set to: {goal_speed}")
-    
-while pot.read()>500:
+
+Nollapiste=300
+
+while pot.read()>Nollapiste:
     SininenLedi.value(1)
     time.sleep(0.1)
     SininenLedi.value(0)
@@ -55,8 +57,8 @@ while True:
   pot_value = pot.read()
   print(pot_value)
   time.sleep(0.1)
-  if pot_value<500: 
+  if pot_value<Nollapiste: 
     triac.value(0)
     tim.deinit() # This kills the background timer completely
   else:
-    set_speed((pot_value-500)/25)
+    set_speed((pot_value-Nollapiste)/20)
