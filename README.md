@@ -2,4 +2,4 @@ Merkittävää kenties se, että käytin zero-detecting optotriaccia, vaikka tek
 
 <img src=rampparulla.jpg>
 
-<img src=poljin2.jpg>
+<img src=poljin.jpg>
