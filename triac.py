@@ -38,7 +38,7 @@ tim = Timer(1)
 
 def set_speed(value):
     global goal_speed,tim
-    tim.init(period=20, mode=Timer.PERIODIC, callback=apply_power)
+    tim.init(period=11, mode=Timer.PERIODIC, callback=apply_power)
     goal_speed = round(value/5.-10)
     if goal_speed==0: goal_speed=1
     print(f"Motor speed set to: {goal_speed}")
