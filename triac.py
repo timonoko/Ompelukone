@@ -1,11 +1,4 @@
-
-
-try:
-  import usocket as socket
-except:
-  import socket
-
-import network,time,machine
+import network,time,machine,socket
 from machine import Pin,Timer,ADC
 
 triac=Pin(5, Pin.OUT)  
