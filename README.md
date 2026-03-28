@@ -6,3 +6,5 @@ Ei mikä tahansa rampparulla. Singer Slant-o-matic 1957 maksaa satasia Ebayssa.
 <img src=rampparulla.jpg>
 
 <img src=poljin2.jpg>
+
+https://youtube.com/shorts/d1vxEruO6-g?si=aJA7WQgHlC6sGKzD
