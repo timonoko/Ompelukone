@@ -10,7 +10,6 @@ pot.atten(ADC.ATTN_11DB)       #Full range: 3.3v
 SininenLedi = Pin(2, Pin.OUT)  
 SininenLedi.value(0)
 
-
 goal_speed = 1  # -10 to 10
 step_counter = 0
 
@@ -32,11 +31,18 @@ tim = Timer(1)
 def set_speed(value):
     global goal_speed,tim
     tim.init(period=11, mode=Timer.PERIODIC, callback=apply_power)
-    goal_speed = round(value/5.-10)
+#    goal_speed = round(value/5.-10)
+    goal_speed = round(value/2.-25)
     if goal_speed==0: goal_speed=1
     print(f"Motor speed set to: {goal_speed}")
 
-Nollapiste=300
+if pot.read()>2000: # kun kaasu on pohjassa: nettiyhteys
+    import netti
+    while True:
+        print('netti')
+        time.sleep(1)
+        
+Nollapiste=200
 
 while pot.read()>Nollapiste:
     SininenLedi.value(1)
