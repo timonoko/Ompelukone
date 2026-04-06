@@ -42,7 +42,7 @@ if pot.read()>2000: # kun kaasu on pohjassa: nettiyhteys
         print('netti')
         time.sleep(1)
         
-Nollapiste=200
+Nollapiste=100
 
 while pot.read()>Nollapiste:
     SininenLedi.value(1)
@@ -54,10 +54,14 @@ SininenLedi.value(0)
     
 while True:
   pot_value = pot.read()
-  print(pot_value)
+  print("raaka=",pot_value)
   time.sleep(0.1)
   if pot_value<Nollapiste: 
     triac.value(0)
     tim.deinit() # This kills the background timer completely
   else:
-    set_speed((pot_value-Nollapiste)/20)
+    range=(4000-Nollapiste)
+    value=(pot_value-Nollapiste)/range
+    value=int(range*(value**1.2))
+    print(pot_value,value)
+    set_speed((value)/20)
