@@ -51,17 +51,25 @@ while pot.read()>Nollapiste:
     time.sleep(0.1)
 
 SininenLedi.value(0)
-    
+
+Stopped=True
+
 while True:
   pot_value = pot.read()
   print("raaka=",pot_value)
   time.sleep(0.1)
-  if pot_value<Nollapiste: 
+  if pot_value<Nollapiste:
+    Stopped=True
     triac.value(0)
     tim.deinit() # This kills the background timer completely
   else:
+    if Stopped:
+      triac.value(1)
+      time.sleep(2*1./50) #moottorille alkusykäys
+      triac.value(0)
+      Stopped=False
     range=(4000-Nollapiste)
     value=(pot_value-Nollapiste)/range
     value=int(range*(value**1.2))
     print(pot_value,value)
-    set_speed((value)/20)
+    set_speed(value/20)
