@@ -3,7 +3,9 @@ Uusi 11 millisekunnin kytkentätaajuus tuottaa satunnaisesti 10 ms half-cycle pu
 
 Ei mikä tahansa rampparulla. Singer Slant-o-matic 1957 maksaa satasia Ebayssa.
 
-Uutta: Jos käynnistää kaasu pohjassa, se kytkeytyy nettiin ja siitä tulee webrepl-serveri.
+Jos käynnistää kaasu pohjassa, se kytkeytyy nettiin ja siitä tulee webrepl-serveri.
+
+Ompelukokemus on paljastanut, että vehje on niin hyvissä rasvoissa, että käyntiinlähtötilanne on hieman epämääräinen ja tahmea. Siksi siinä on nyt 40ms pulssi, joka nykäiseen moottorin liikkeelle.
 
 <img src=rampparulla.jpg>
 
