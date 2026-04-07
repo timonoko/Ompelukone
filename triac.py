@@ -72,4 +72,4 @@ while True:
     value=(pot_value-Nollapiste)/range
     value=int(range*(value**1.2))
     print(pot_value,value)
-    set_speed(value/20)
+    set_speed(value/30)
