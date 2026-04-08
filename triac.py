@@ -7,8 +7,8 @@ triac.value(0)
 pot = ADC(Pin(15))
 pot.atten(ADC.ATTN_11DB)       #Full range: 3.3v
 
-SininenLedi = Pin(2, Pin.OUT)  
-SininenLedi.value(0)
+blue_led = Pin(2, Pin.OUT)  
+blue_led.value(0)
 
 goal_speed = 1  # -10 to 10
 step_counter = 0
@@ -36,40 +36,40 @@ def set_speed(value):
     if goal_speed==0: goal_speed=1
     print(f"Motor speed set to: {goal_speed}")
 
-if pot.read()>2000: # kun kaasu on pohjassa: nettiyhteys
-    import netti
+if pot.read()>2000: # if throttle is at max: network connection
+    import network_config
     while True:
-        print('netti')
+        print('network')
         time.sleep(1)
         
-Nollapiste=100
+zero_point=100
 
-while pot.read()>Nollapiste:
-    SininenLedi.value(1)
+while pot.read()>zero_point:
+    blue_led.value(1)
     time.sleep(0.1)
-    SininenLedi.value(0)
+    blue_led.value(0)
     time.sleep(0.1)
 
-SininenLedi.value(0)
+blue_led.value(0)
 
-Stopped=True
+stopped=True
 
 while True:
   pot_value = pot.read()
-  print("raaka=",pot_value)
+  print("raw=",pot_value)
   time.sleep(0.1)
-  if pot_value<Nollapiste:
-    Stopped=True
+  if pot_value<zero_point:
+    stopped=True
     triac.value(0)
     tim.deinit() # This kills the background timer completely
   else:
-    if Stopped:
+    if stopped:
       triac.value(1)
-      time.sleep(2*1./50) #moottorille alkusykäys
+      time.sleep(2*1./50) # initial boost for the motor
       triac.value(0)
-      Stopped=False
-    range=(4000-Nollapiste)
-    value=(pot_value-Nollapiste)/range
-    value=int(range*(value**1.2))
+      stopped=False
+    range_val=(4000-zero_point)
+    value=(pot_value-zero_point)/range_val
+    value=int(range_val*(value**1.2))
     print(pot_value,value)
     set_speed(value/30)
