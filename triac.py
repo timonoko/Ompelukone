@@ -65,11 +65,16 @@ while True:
   else:
     if stopped:
       triac.value(1)
-      time.sleep(2*1./50) # initial boost for the motor
+      time.sleep(4*1./50) # initial boost for the motor
+      if pot.read() > (zero_point+300):
+          time.sleep(4*1./50)
+          pot_value=zero_point+10
+          triac.value(0)
+          time.sleep(1)
       triac.value(0)
       stopped=False
     range_val=(4000-zero_point)
     value=(pot_value-zero_point)/range_val
-    value=int(range_val*(value**1.2))
+    value=int(range_val*(value**0.5))
     print(pot_value,value)
     set_speed(value/30)
