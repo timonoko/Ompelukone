@@ -7,6 +7,9 @@ triac.value(0)
 pot = ADC(Pin(15))
 pot.atten(ADC.ATTN_11DB)       #Full range: 3.3v
 
+sensor = ADC(Pin(4))
+sensor.atten(ADC.ATTN_11DB)       #Full range: 3.3v
+
 blue_led = Pin(2, Pin.OUT)  
 blue_led.value(0)
 
@@ -34,7 +37,7 @@ def set_speed(value):
 #    goal_speed = round(value/5.-10)
     goal_speed = round(value/2.-25)
     if goal_speed==0: goal_speed=1
-    print(f"Motor speed set to: {goal_speed}")
+#    print(f"Motor speed set to: {goal_speed}")
 
 if pot.read()>2000: # if throttle is at max: network connection
     import network_config
@@ -52,12 +55,11 @@ while pot.read()>zero_point:
 
 blue_led.value(0)
 
-stopped=True
 
+stopped=True
 while True:
   pot_value = pot.read()
-  print("raw=",pot_value)
-  time.sleep(0.1)
+  time.sleep(0.5)
   if pot_value<zero_point:
     stopped=True
     triac.value(0)
@@ -65,8 +67,8 @@ while True:
   else:
     if stopped:
       triac.value(1)
-      time.sleep(4*1./50) # initial boost for the motor
-      if pot.read() > (zero_point+300):
+      time.sleep(2*1./50) # initial boost for the motor
+      if pot.read() > (zero_point+400):
           time.sleep(4*1./50)
           pot_value=zero_point+10
           triac.value(0)
@@ -76,5 +78,5 @@ while True:
     range_val=(4000-zero_point)
     value=(pot_value-zero_point)/range_val
     value=int(range_val*(value**0.5))
-    print(pot_value,value)
+    print(value,sensor.read())
     set_speed(value/30)
