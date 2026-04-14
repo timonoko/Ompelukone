@@ -71,7 +71,7 @@ while True:
   pot_value = pot.read()
   value=(pot_value-zero_point)
   print(value,int(SPEED))
-  time.sleep(0.1)
+  time.sleep(0.2)
   if pot_value<zero_point:
       stopped=True
       triac.value(0)
