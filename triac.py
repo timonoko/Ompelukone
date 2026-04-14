@@ -96,7 +96,7 @@ while True:
       if diff>0:
           previous_speed=0.5*previous_speed + 0.5*diff
           if previous_speed>100: previous_speed=100
-          set_speed(diff)
+          set_speed(previous_speed)
       else:
           previous_speed=previous_speed-20
           set_speed(previous_speed)
