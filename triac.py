@@ -37,7 +37,7 @@ def set_speed(value):
 #    goal_speed = round(value/5.-10)
     goal_speed = round(value/2.-25)
     if goal_speed==0: goal_speed=1
-#    print(f"Motor speed set to: {goal_speed}")
+    print(f"Motorspeed: {int(value)}")
 
 if pot.read()>2000: # if throttle is at max: network connection
     import network_config
@@ -55,28 +55,48 @@ while pot.read()>zero_point:
 
 blue_led.value(0)
 
+SPEED=0   
+PREV_SPEED=0
+count=Timer(2)
+def count_speed(t): #speed sensor from old walkman motor
+    global SPEED
+    SPEED=0.9 * (SPEED + 0.1*sensor.read())
+def start_count():
+    count.deinit()
+    count.init(period=1, mode=Timer.PERIODIC, callback=count_speed)
 
+previous_speed=0
 stopped=True
 while True:
   pot_value = pot.read()
-  time.sleep(0.5)
+  value=(pot_value-zero_point)
+  print(value,int(SPEED))
+  time.sleep(0.1)
   if pot_value<zero_point:
-    stopped=True
-    triac.value(0)
-    tim.deinit() # This kills the background timer completely
-  else:
-    if stopped:
-      triac.value(1)
-      time.sleep(2*1./50) # initial boost for the motor
-      if pot.read() > (zero_point+400):
-          time.sleep(4*1./50)
-          pot_value=zero_point+10
-          triac.value(0)
-          time.sleep(1)
+      stopped=True
       triac.value(0)
-      stopped=False
-    range_val=(4000-zero_point)
-    value=(pot_value-zero_point)/range_val
-    value=int(range_val*(value**0.5))
-    print(value,sensor.read())
-    set_speed(value/30)
+      tim.deinit() # This kills the background timer completely
+      count.deinit()
+      SPEED=0
+  else:
+      if stopped:
+          triac.value(1)
+          time.sleep(2*1./50) # initial boost for the motor
+          if pot.read() > (zero_point+400):
+              time.sleep(4*1./50)
+              pot_value=zero_point+10
+              triac.value(0)
+              time.sleep(1)
+          triac.value(0)
+          stopped=False
+          start_count()
+      if PREV_SPEED==SPEED: start_count()
+      else: PREV_SPEED=SPEED
+      diff=(value-SPEED)/10
+      if diff>0:
+          previous_speed=0.5*previous_speed + 0.5*diff
+          if previous_speed>100: previous_speed=100
+          set_speed(diff)
+      else:
+          previous_speed=previous_speed-20
+          set_speed(previous_speed)
