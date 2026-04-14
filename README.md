@@ -9,7 +9,7 @@ Ompelukokemus on paljastanut, että vehje on niin hyvissä rasvoissa, että käy
 
 <img src=rampparulla.jpg>
 
-Nyt siinä vauhtianturi, joka on Walkman kasettimankin moottori.
+Nyt siinä vauhtianturi, joka on Walkman kasettimankan moottori.
 
 <img src=sensor.jpg>
 
