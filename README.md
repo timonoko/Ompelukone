@@ -9,6 +9,10 @@ Ompelukokemus on paljastanut, että vehje on niin hyvissä rasvoissa, että käy
 
 <img src=rampparulla.jpg>
 
+Nyt siinä vauhtianturi, joka on Walkman kasettimankin moottori.
+
+<img src=sensor.jpg>
+
 <img src=poljin2.jpg>
 
 https://youtube.com/shorts/d1vxEruO6-g?si=aJA7WQgHlC6sGKzD
