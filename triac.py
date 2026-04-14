@@ -68,35 +68,28 @@ def start_count():
 previous_speed=0
 stopped=True
 while True:
+  time.sleep(0.01)
   pot_value = pot.read()
   value=(pot_value-zero_point)
   print(value,int(SPEED))
-  time.sleep(0.2)
   if pot_value<zero_point:
-      stopped=True
-      triac.value(0)
-      tim.deinit() # This kills the background timer completely
-      count.deinit()
-      SPEED=0
+      if not stopped:
+          stopped=True
+          triac.value(0)
+          tim.deinit() # This kills the background timer completely
+          count.deinit()
+          SPEED=0
   else:
       if stopped:
           triac.value(1)
           time.sleep(2*1./50) # initial boost for the motor
-          if pot.read() > (zero_point+400):
-              time.sleep(4*1./50)
-              pot_value=zero_point+10
-              triac.value(0)
-              time.sleep(1)
           triac.value(0)
           stopped=False
           start_count()
       if PREV_SPEED==SPEED: start_count()
       else: PREV_SPEED=SPEED
       diff=(value-SPEED)/10
-      if diff>0:
-          previous_speed=0.5*previous_speed + 0.5*diff
-          if previous_speed>100: previous_speed=100
-          set_speed(previous_speed)
-      else:
-          previous_speed=previous_speed-20
-          set_speed(previous_speed)
+      previous_speed=0.5*previous_speed + 0.5*diff
+      set_speed(previous_speed)
+      time.sleep(0.5)
+
