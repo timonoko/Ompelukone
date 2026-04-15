@@ -86,10 +86,10 @@ while True:
           triac.value(0)
           stopped=False
           start_count()
-      if PREV_SPEED==SPEED: start_count()
+      elif PREV_SPEED==SPEED: start_count()
       else: PREV_SPEED=SPEED
       diff=(value-SPEED)/10
       previous_speed=0.5*previous_speed + 0.5*diff
       set_speed(previous_speed)
-      time.sleep(0.5)
+      time.sleep(0.2)
 
