@@ -45,7 +45,7 @@ if pot.read()>2000: # if throttle is at max: network connection
         print('network')
         time.sleep(1)
         
-zero_point=100
+zero_point=50
 
 while pot.read()>zero_point:
     blue_led.value(1)
@@ -62,8 +62,9 @@ def count_speed(t): #speed sensor from old walkman motor
     global SPEED
     SPEED=0.9 * (SPEED + 0.1*sensor.read())
 def start_count():
+    PREV_SPEED=10 # avoid 0==0 trap
     count.deinit()
-    count.init(period=1, mode=Timer.PERIODIC, callback=count_speed)
+    count.init(period=10, mode=Timer.PERIODIC, callback=count_speed)
 
 previous_speed=0
 stopped=True
@@ -88,8 +89,9 @@ while True:
           start_count()
       elif PREV_SPEED==SPEED: start_count()
       else: PREV_SPEED=SPEED
-      diff=(value-SPEED)/10
-      previous_speed=0.5*previous_speed + 0.5*diff
+      diff=(value-SPEED)/5
+      memory=0.1
+      previous_speed= memory*previous_speed + (1.0-memory)*diff
       set_speed(previous_speed)
       time.sleep(0.2)
 
