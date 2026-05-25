@@ -89,7 +89,7 @@ while True:
           start_count()
       elif PREV_SPEED==SPEED: start_count()
       else: PREV_SPEED=SPEED
-      diff=(value-SPEED)/5
+      diff=(value-SPEED)/20 # 5 was too jerky
       memory=0.1
       previous_speed= memory*previous_speed + (1.0-memory)*diff
       set_speed(previous_speed)
