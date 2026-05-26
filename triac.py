@@ -55,14 +55,16 @@ while pot.read()>zero_point:
 
 blue_led.value(0)
 
-SPEED=0   
-PREV_SPEED=0
+#speed sensor from old walkman motor
+WALKMAN=0   
+PREV_WALKMAN=0
 count=Timer(2)
-def count_speed(t): #speed sensor from old walkman motor
-    global SPEED
-    SPEED=0.9 * (SPEED + 0.1*sensor.read())
+def count_speed(t):
+    global WALKMAN
+    WALKMAN=0.9 * (WALKMAN + 0.1*sensor.read())
 def start_count():
-    PREV_SPEED=10 # avoid 0==0 trap
+    global PREV_WALKMAN
+    PREV_WALKMAN=10 # avoid 0==0 trap
     count.deinit()
     count.init(period=10, mode=Timer.PERIODIC, callback=count_speed)
 
@@ -70,16 +72,15 @@ previous_speed=0
 stopped=True
 while True:
   time.sleep(0.01)
-  pot_value = pot.read()
-  value=(pot_value-zero_point)
-  print(value,int(SPEED))
-  if pot_value<zero_point:
+  pot_pedal = pot.read()
+  pedal=(pot_pedal-zero_point)
+  if pot_pedal<zero_point:
       if not stopped:
           stopped=True
           triac.value(0)
           tim.deinit() # This kills the background timer completely
           count.deinit()
-          SPEED=0
+          WALKMAN=0
   else:
       if stopped:
           triac.value(1)
@@ -87,11 +88,11 @@ while True:
           triac.value(0)
           stopped=False
           start_count()
-      elif PREV_SPEED==SPEED: start_count()
-      else: PREV_SPEED=SPEED
-      diff=(value-SPEED)/20 # 5 was too jerky
-      memory=0.1
-      previous_speed= memory*previous_speed + (1.0-memory)*diff
+      elif PREV_WALKMAN==WALKMAN: start_count()
+      else: PREV_WALKMAN=WALKMAN
+      diff=(pedal-WALKMAN)/20 # 5 was too jerky
+      lazyness=0.1
+      previous_speed= lazyness*previous_speed + (1.0-lazyness)*diff
       set_speed(previous_speed)
       time.sleep(0.2)
 
